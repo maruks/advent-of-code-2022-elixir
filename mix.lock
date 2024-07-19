@@ -1,0 +1,3 @@
+%{
+  "aja": {:hex, :aja, "0.6.5", "e780fce3de247d86bb25097726021c5c53ebe383300290e26c61e4d36bfe85e8", [:mix], [{:jason, "~> 1.2", [hex: :jason, repo: "hexpm", optional: true]}], "hexpm", "cd377ac20f487dd7987be13772c37eb2f42ab038c0654714a1ecb3607f9e8590"},
+}
