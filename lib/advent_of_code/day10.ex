@@ -42,7 +42,7 @@ defmodule AdventOfCode.Day10 do
   end
 
   def sum_of_all_signal_strengths(input) do
-    sum_of_signal_strengths(input, [20, 60, 100, 140, 180, 220])
+    sum_of_signal_strengths(input, [20 | Enum.to_list 60..220//40])
   end
 
   def part_one() do
@@ -50,6 +50,39 @@ defmodule AdventOfCode.Day10 do
     |> sum_of_all_signal_strengths()
   end
 
+  defp pixel(position, x) when x - 1 <= position and x + 1 >= position, do: ?#
+  defp pixel(_, _), do: ?.
+
+  defp draw_pixel(x, counter) do
+    position = rem (counter - 1), 40
+    pixel(x, position)
+  end
+
+  def draw([instruction | _] = instructions) do
+    n = case instruction do
+      {:noop, _} -> 1
+      {:addx, _} -> 2
+    end
+    draw(instructions, 1, 1, n, ~c"")
+  end
+  def draw(_, _ , counter, _ , result) when counter > 240, do: result |> Enum.reverse() |> Enum.chunk_every(40) |> Enum.join("\n") |> to_string()
+  def draw([instruction | instructions_tail], x , counter, 0 , result) do
+    next_x = case instruction do
+      {:noop, _} -> x
+      {:addx, a} -> a + x
+    end
+    next_n = case hd(instructions_tail) do
+      {:noop, _} -> 1
+      {:addx, _} -> 2
+    end
+    draw(instructions_tail, next_x , counter, next_n , result)
+  end
+  def draw(instructions, x , counter, n , result) do
+    draw(instructions, x , 1 + counter, n - 1, [ draw_pixel(x, counter) | result])
+  end
+
   def part_two() do
+    read_input()
+    |> draw()
   end
 end

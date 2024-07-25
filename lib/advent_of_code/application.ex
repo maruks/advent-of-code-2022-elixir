@@ -9,7 +9,8 @@ defmodule AdventOfCode.Application do
 
   def run() do
     tasks = [{"Day 8", "Treetop Tree House"},
-	     {"Day 9", "Rope Bridge"}]
+	     {"Day 9", "Rope Bridge"},
+	     {"Day 10", "Cathode-Ray Tube"}]
 
     tasks
     |> Enum.map(fn {day, name} ->
