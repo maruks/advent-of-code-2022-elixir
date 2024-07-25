@@ -8,15 +8,16 @@ defmodule AdventOfCode.Application do
   end
 
   def run() do
-    tasks = [{"Day 8", "Treetop Tree House"}]
+    tasks = [{"Day 8", "Treetop Tree House"},
+	     {"Day 9", "Rope Bridge"}]
 
     tasks
     |> Enum.map(fn {day, name} ->
       Task.Supervisor.async(AdventOfCode, fn ->
-        IO.puts(~s/--- #{day}: #{name} ---/)
         mod = Module.concat(["Elixir", "AdventOfCode", String.replace(day, " ", "")])
-        IO.puts(apply(mod, :part_one, []))
-        IO.puts(apply(mod, :part_two, []))
+        one = apply(mod, :part_one, [])
+        two = apply(mod, :part_two, [])
+	IO.puts(~s/--- #{day}: #{name} ---\n#{one}\n#{two}/)
       end)
     end)
     |> Enum.each(fn task -> Task.await(task) end)
